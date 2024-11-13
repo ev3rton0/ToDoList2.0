@@ -218,52 +218,80 @@ public class Main {
     
 
     private static void editarTarefa(CrudTarefa crudTarefa, Scanner scanner, DateTimeFormatter formatter) {
-            System.out.print("\n| Título da Tarefa a ser editada: ");
-            String titulo1 = scanner.nextLine();
+        System.out.print("\n| Título da Tarefa a ser editada: ");
+        String titulo1 = scanner.nextLine();
+        
+        // Verifica se a tarefa existe
+        if (crudTarefa.buscarTarefa(titulo1)) {
+            Tarefa tarefa = crudTarefa.getTarefaPorTitulo(titulo1);
+    
+            // Pergunta os valores gerais
+            System.out.print("| Novo Título da Tarefa: ");
+            String novoTitulo = scanner.nextLine();
+            System.out.print("| Nova Descrição da Tarefa: ");
+            String novaDescricao = scanner.nextLine();
+            System.out.print("| Nova Data de Entrega (dd/MM/yyyy): ");
+            String novaDataEntregaStr = scanner.nextLine();
+            LocalDate novaDataEntrega = LocalDate.parse(novaDataEntregaStr, formatter);
+    
+            int prioridade = -1; // Variável para armazenar a prioridade
             
-            // Verifica se a tarefa existe
-            if (crudTarefa.buscarTarefa(titulo1)) {
-                Tarefa tarefa = crudTarefa.getTarefaPorTitulo(titulo1);
-        
-                // Pergunta os valores gerais
-                System.out.print("| Novo Título da Tarefa: ");
-                String novoTitulo = scanner.nextLine();
-                System.out.print("| Nova Descrição da Tarefa: ");
-                String novaDescricao = scanner.nextLine();
-                System.out.print("| Nova Data de Entrega (dd/MM/yyyy): ");
-                String novaDataEntregaStr = scanner.nextLine();
-                LocalDate novaDataEntrega = LocalDate.parse(novaDataEntregaStr, formatter);
-        
-                if (tarefa instanceof TarefaDeTrabalho) {
-                    //TarefaDeTrabalho tarefaTrabalho = (TarefaDeTrabalho) tarefa;
-        
-                    System.out.print("| Novo Colaborador: ");
-                    String novoColaborador = scanner.nextLine();
-                    System.out.print("| Prioridade:1 - (Alta)\n\t     2 - (Media)\n\t     3 - (Baixa)\n-> ");
-                    int novaPrioridade = scanner.nextInt();
-                    scanner.nextLine(); // Consome o \n após o int
-                    System.out.print("| Novo Status: ");
-                    String novoStatus = scanner.nextLine();
-        
-                    crudTarefa.editarTarefaDeTrabalho(titulo1, novoTitulo, novaDescricao, novaDataEntrega, novaPrioridade, novoColaborador, novoStatus);
-        
-                } else if (tarefa instanceof TarefaPessoal) {
-                    //TarefaPessoal tarefaPessoal = (TarefaPessoal) tarefa;
-        
-                    System.out.print("| Nova Categoria: ");
-                    String novaCategoria = scanner.nextLine();
-                    System.out.print("| Prioridade:1 - (Alta)\n\t     2 - (Media)\n\t     3 - (Baixa)\n-> ");
-                    int novaPrioridade = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("| Novo Status: ");
-                    String novoStatus = scanner.nextLine();
-        
-                    crudTarefa.editarTarefa(titulo1, novoTitulo, novaDescricao, novaDataEntrega, novaCategoria, novaPrioridade, novoStatus);
+            if (tarefa instanceof TarefaDeTrabalho) {
+                System.out.print("| Novo Colaborador: ");
+                String novoColaborador = scanner.nextLine();
+    
+                // Solicita e valida a prioridade
+                while (true) {
+                    try {
+                        System.out.print("| Prioridade: 1 - (Alta)\n\t      2 - (Média)\n\t      3 - (Baixa)\n-> ");
+                        prioridade = scanner.nextInt();
+                        scanner.nextLine(); // Consome o \n após o int
+    
+                        if (prioridade >= 1 && prioridade <= 3) {
+                            break; // Se a prioridade for válida, sai do loop
+                        } else {
+                            System.out.println("Por favor, insira um número entre 1 e 3 para definir a prioridade.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Entrada inválida. Por favor, insira um número inteiro entre 1 e 3.");
+                        scanner.nextLine(); // Limpa o buffer em caso de erro
+                    }
                 }
-            } else {
-                System.out.println("Tarefa não encontrada.");
+    
+                System.out.print("| Novo Setor da Empresa: ");
+                String novoSetorDaEmpresa = scanner.nextLine();
+    
+                crudTarefa.editarTarefaDeTrabalho(titulo1, novoTitulo, novaDescricao, novaDataEntrega, prioridade, novoColaborador, novoSetorDaEmpresa);
+    
+            } else if (tarefa instanceof TarefaPessoal) {
+                // Solicita e valida a prioridade
+                while (true) {
+                    try {
+                        System.out.print("| Prioridade: 1 - (Alta)\n\t      2 - (Média)\n\t      3 - (Baixa)\n-> ");
+                        prioridade = scanner.nextInt();
+                        scanner.nextLine(); // Consome o \n após o int
+    
+                        if (prioridade >= 1 && prioridade <= 3) {
+                            break; // Se a prioridade for válida, sai do loop
+                        } else {
+                            System.out.println("Por favor, insira um número entre 1 e 3 para definir a prioridade.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Entrada inválida. Por favor, insira um número inteiro entre 1 e 3.");
+                        scanner.nextLine(); // Limpa o buffer em caso de erro
+                    }
+                }
+    
+                System.out.print("| Nova Categoria: ");
+                String novaCategoria = scanner.nextLine();
+    
+                crudTarefa.editarTarefa(titulo1, novoTitulo, novaDescricao, novaDataEntrega, prioridade, novaCategoria);
             }
+        } else {
+            System.out.println("Tarefa não encontrada.");
         }
+    }
+    
 
     private static void removerTarefa(CrudTarefa crudTarefa, Scanner scanner) {
         System.out.print("\nTítulo da Tarefa a ser removida: ");

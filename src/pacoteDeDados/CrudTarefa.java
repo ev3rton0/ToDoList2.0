@@ -40,8 +40,8 @@ public class CrudTarefa {
     }
 
     // Método para criar uma nova TarefaDeTrabalho
-    public void criarTarefaDeTrabalho(String titulo, String descricao, LocalDate dataEntrega, String colaborador, int prioridade, String status) {
-        Tarefa novaTarefa = new TarefaDeTrabalho(titulo, descricao, dataEntrega, colaborador, prioridade, status);
+    public void criarTarefaDeTrabalho(String titulo, String descricao, LocalDate dataEntrega, String colaborador, int prioridade, String setorDaEmpresa) {
+        Tarefa novaTarefa = new TarefaDeTrabalho(titulo, descricao, dataEntrega, colaborador, prioridade, setorDaEmpresa);
         tarefas.add(novaTarefa);
     }
 
@@ -52,7 +52,7 @@ public class CrudTarefa {
     }
 
     // Método para editar uma tarefa
-    public boolean editarTarefa(String tituloExistente, String novoTitulo, String novaDescricao, LocalDate novaDataEntrega, String novaCategoria, int novaPrioridade, String novoLocal) {
+    public boolean editarTarefa(String tituloExistente, String novoTitulo, String novaDescricao, LocalDate novaDataEntrega,  int prioridade, String novaCategoria) {
         if (tarefas.isEmpty()) {
             System.out.println("Não há tarefas para serem editadas.");
             return false;
@@ -61,7 +61,7 @@ public class CrudTarefa {
                 if (tarefa.getTitulo().equals(tituloExistente)) {
                     // Remover a tarefa existente e adicionar uma nova
                     tarefas.remove(tarefa);
-                    tarefas.add(new TarefaPessoal(novoTitulo, novaDescricao, novaDataEntrega, novaCategoria, novaPrioridade));
+                    tarefas.add(new TarefaPessoal(novoTitulo, novaDescricao, novaDataEntrega, novaCategoria, prioridade));
                     System.out.println("Tarefa editada: " + novoTitulo);
                     return true;
                 }
@@ -70,23 +70,17 @@ public class CrudTarefa {
         return false;
     }
 
-    public boolean editarTarefaDeTrabalho(String tituloExistente, String novoTitulo, String novaDescricao, LocalDate novaDataEntrega, int novaPrioridade, String novoColaborador, String novoStatus) {
+    public boolean editarTarefaDeTrabalho(String tituloExistente, String novoTitulo, String novaDescricao, LocalDate novaDataEntrega, int prioridade, String novoColaborador, String novoSetorDaEmpresa) {
         if (tarefas.isEmpty()) {
             System.out.println("Não há tarefas para serem editadas.");
             return false;
         } else {
             for (Tarefa tarefa : tarefas) {
                 if (tarefa instanceof TarefaDeTrabalho && tarefa.getTitulo().equals(tituloExistente)) {
-                    // Verificar se a nova prioridade é válida
-                    if (novaPrioridade < 1 || novaPrioridade > 3) {
-                        System.out.println("Prioridade inválida. A prioridade deve ser 1, 2 ou 3.");
-                        return false;
-                    }
-
                     // Remover a tarefa de trabalho existente
                     tarefas.remove(tarefa);
                     // Criar e adicionar a nova tarefa de trabalho com a nova prioridade
-                    tarefas.add(new TarefaDeTrabalho(novoTitulo, novaDescricao, novaDataEntrega, novoColaborador, novaPrioridade, novoStatus));
+                    tarefas.add(new TarefaDeTrabalho(novoTitulo, novaDescricao, novaDataEntrega, novoColaborador,prioridade, novoSetorDaEmpresa));
                     System.out.println("Tarefa de trabalho editada: " + novoTitulo);
                     return true;
                 }
