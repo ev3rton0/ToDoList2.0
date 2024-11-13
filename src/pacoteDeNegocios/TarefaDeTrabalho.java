@@ -46,6 +46,7 @@ public class TarefaDeTrabalho extends Tarefa {
                "\nColaborador: " + colaborador +
                "\nPrioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +
                "\nSetor da Empresa: " + setorDaEmpresa +
+               "\n======Tarefa de Trabalho======" +
                "\n";
     }
 

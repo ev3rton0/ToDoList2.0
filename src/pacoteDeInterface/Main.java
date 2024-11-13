@@ -34,110 +34,124 @@ public class Main {
         while (opcao != 0) {
             exibirMenu(tipoUsuario);
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine();  // Limpar o buffer
-
-            switch (opcao) {
-                case 1:
-                    if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-                        System.out.print("\nTítulo da Tarefa: ");
-                        String tituloTarefa = scanner.nextLine().trim();
-                        System.out.print("Descrição da Tarefa: ");
-                        String descricaoTarefa = scanner.nextLine();
-                        
-                        LocalDate dataEntrega = null;
-                        boolean dataValida = false;
-
-                        // Loop para pedir a data até que o usuário insira no formato correto
-                        while (!dataValida) {
-                            System.out.print("Data de Entrega (dd/MM/yyyy): ");
-                            String dataEntregaStr = scanner.nextLine();
-                            try {
-                                dataEntrega = LocalDate.parse(dataEntregaStr, formatter);
-                                dataValida = true;  // A data foi inserida corretamente
-                            } catch (DateTimeParseException e) {
-                                System.out.println("Formato de data inválido. Por favor, insira no formato dd/MM/yyyy.");
-                            }
-                        }
-
-
-                        int prioridade = 0;
-                        boolean prioridadeValida = false;
-                        while (!prioridadeValida) {
-                            System.out.print("Prioridade:\n1 - (Alta)\n2 - (Media)\n3 - (Baixa)\n-> ");
-                            try {
-                                prioridade = scanner.nextInt();
-                                if (prioridade < 1 || prioridade > 3) {
-                                    throw new IllegalArgumentException("Prioridade fora do intervalo permitido.");
+            
+            try {
+                opcao = scanner.nextInt();
+                scanner.nextLine();  // Limpar o buffer
+        
+                switch (opcao) {
+                    case 1:
+                        if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
+                            System.out.print("\nTítulo da Tarefa: ");
+                            String tituloTarefa = scanner.nextLine().trim();
+                            System.out.print("Descrição da Tarefa: ");
+                            String descricaoTarefa = scanner.nextLine();
+                            
+                            LocalDate dataEntrega = null;
+                            boolean dataValida = false;
+                            
+                            // Loop para pedir a data até que o usuário insira no formato correto
+                            while (!dataValida) {
+                                System.out.print("Data de Entrega (dd/MM/yyyy): ");
+                                String dataEntregaStr = scanner.nextLine();
+                                try {
+                                    dataEntrega = LocalDate.parse(dataEntregaStr, formatter);
+                                    dataValida = true;  // A data foi inserida corretamente
+                                } catch (DateTimeParseException e) {
+                                    System.out.println("Formato de data inválido. Por favor, insira no formato dd/MM/yyyy.");
                                 }
-                                prioridadeValida = true;
-                            } catch (InputMismatchException | IllegalArgumentException e) {
-                                System.out.println("Prioridade inválida! Por favor, escolha um número entre 1 e 3.");
-                                scanner.nextLine();  
                             }
+        
+                            int prioridade = 0;
+                            boolean prioridadeValida = false;
+                            while (!prioridadeValida) {
+                                System.out.print("Prioridade:\n1 - (Alta)\n2 - (Media)\n3 - (Baixa)\n-> ");
+                                try {
+                                    prioridade = scanner.nextInt();
+                                    if (prioridade < 1 || prioridade > 3) {
+                                        throw new IllegalArgumentException("Prioridade fora do intervalo permitido.");
+                                    }
+                                    prioridadeValida = true;
+                                } catch (InputMismatchException | IllegalArgumentException e) {
+                                    System.out.println("Prioridade inválida! Por favor, escolha um número entre 1 e 3.");
+                                    scanner.nextLine();  // Limpar o buffer para evitar loop infinito
+                                }
+                            }
+                            scanner.nextLine();  // Limpar o buffer
+                            criarTarefa(crudTarefa, tituloTarefa, descricaoTarefa, dataEntrega, prioridade, scanner);
+                        } else {
+                            System.out.println("Opção inválida para o usuário leitor.");
                         }
-                        scanner.nextLine();
-
-                        criarTarefa(crudTarefa, tituloTarefa, descricaoTarefa, dataEntrega, prioridade, scanner);
-                    } else {
-                        System.out.println("Opção inválida para o usuário leitor.");
-                    }
-                    break;
-                case 2:
-                    if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-                        editarTarefa(crudTarefa, scanner, formatter);
-                    } else {
-                        System.out.println("Opção inválida para o usuário leitor.");
-                    }
-                    break;
-                case 3:
-                    if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-                        removerTarefa(crudTarefa, scanner);
-                    } else {
-                        System.out.println("Opção inválida para o usuário leitor.");
-                    }
-                    break;
-                case 4:
-                    marcarComoConcluida(crudTarefa, scanner);
-                    break;
-                case 5:
-                    listarTarefa.listarTarefas(crudTarefa.getTarefas());
-                    break;
-                case 6:
-                    listarTarefa.listarTarefasConcluidas(crudTarefa.getTarefas());
-                    break;
-                case 7:
-                    listarTarefasPendentesPorPrioridade(crudTarefa.getTarefas(), listarTarefa);
-                    break;
-                case 8:
-                    tipoUsuario = selecionarTipoUsuario(scanner);
-                    break;
-                case 0:
-                    System.out.println("Finalizando...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-                    break;
+                        break;
+                    case 2:
+                        if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
+                            editarTarefa(crudTarefa, scanner, formatter);
+                        } else {
+                            System.out.println("Opção inválida para o usuário leitor.");
+                        }
+                        break;
+                    case 3:
+                        if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
+                            removerTarefa(crudTarefa, scanner);
+                        } else {
+                            System.out.println("Opção inválida para o usuário leitor.");
+                        }
+                        break;
+                    case 4:
+                        marcarComoConcluida(crudTarefa, scanner);
+                        break;
+                    case 5:
+                        listarTarefa.listarTarefas(crudTarefa.getTarefas());
+                        break;
+                    case 6:
+                        listarTarefa.listarTarefasConcluidas(crudTarefa.getTarefas());
+                        break;
+                    case 7:
+                        listarTarefasPendentesPorPrioridade(crudTarefa.getTarefas(), listarTarefa);
+                        break;
+                    case 8:
+                        tipoUsuario = selecionarTipoUsuario(scanner);
+                        break;
+                    case 0:
+                        System.out.println("Finalizando...");
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("\nEntrada inválida! Por favor, insira um número.");
+                scanner.nextLine();  // Limpar o buffer para evitar loop infinito
             }
         }
-
+        
         scanner.close();
     }
 
-    private static TipoUsuario selecionarTipoUsuario(Scanner scanner) {
-        System.out.println("| 1. Administrador");
-        System.out.println("| 2. Leitor");
-        System.out.println("\nSelecione o tipo de usuário:");
-        int escolha = scanner.nextInt();
-        scanner.nextLine();  // Limpar o buffer
 
-        if (escolha == 1) {
-            return TipoUsuario.ADMINISTRADOR;
-        } else if (escolha == 2) {
-            return TipoUsuario.LEITOR;
-        } else {
-            System.out.println("Opção inválida. Selecionando usuário leitor por padrão.");
-            return TipoUsuario.LEITOR;
+    private static TipoUsuario selecionarTipoUsuario(Scanner scanner) {
+        int escolha = -1;
+        
+        while (true) {
+            try {
+                System.out.println("| 1. Administrador");
+                System.out.println("| 2. Leitor");
+                System.out.println("\nSelecione o tipo de usuário:");
+                
+                escolha = scanner.nextInt();
+                scanner.nextLine();  // Limpar o buffer
+                
+                if (escolha == 1) {
+                    return TipoUsuario.ADMINISTRADOR;
+                } else if (escolha == 2) {
+                    return TipoUsuario.LEITOR;
+                } else {
+                    System.out.println("Opção inválida. Por favor, escolha 1 para Administrador ou 2 para Leitor.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                scanner.nextLine(); // Limpa a entrada inválida do scanner
+            }
         }
     }
 
@@ -156,13 +170,31 @@ public class Main {
         System.out.println("| 0. Finalizar\n");
     }
 
-    private static void criarTarefa(CrudTarefa crudTarefa, String titulo, String descricao, LocalDate dataEntrega, int prioridade, Scanner scanner) {
-        System.out.println("Escolha o tipo de tarefa:");
-        System.out.println("1. Tarefa de Trabalho");
-        System.out.println("2. Tarefa Pessoal");
-        int tipo = scanner.nextInt();
-        scanner.nextLine();  // Limpar o buffer
 
+    private static void criarTarefa(CrudTarefa crudTarefa, String titulo, String descricao, LocalDate dataEntrega, int prioridade, Scanner scanner) {
+        int tipo = 0;
+        boolean tipoValido = false;
+    
+        while (!tipoValido) {
+            System.out.println("Escolha o tipo de tarefa:");
+            System.out.println("1. Tarefa de Trabalho");
+            System.out.println("2. Tarefa Pessoal");
+    
+            try {
+                tipo = scanner.nextInt();
+                scanner.nextLine();  // Limpar o buffer
+    
+                if (tipo == 1 || tipo == 2) {
+                    tipoValido = true;  // Valor válido, sair do loop
+                } else {
+                    System.out.println("Entrada inválida! Por favor, insira um número (1 ou 2).");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida! Por favor, insira um número (1 ou 2).\n");
+                scanner.nextLine();  // Limpar o buffer para evitar loop infinito
+            }
+        }
+    
         if (tipo == 1) {
             System.out.print("Colaborador: ");
             String colaborador = scanner.nextLine();
@@ -174,7 +206,11 @@ public class Main {
             String categoria = scanner.nextLine();
             crudTarefa.criarTarefaPessoal(titulo, descricao, dataEntrega, categoria, prioridade);
         }
+
+        System.out.println("Tarefa criada com sucesso!");
+
     }
+    
 
     private static void editarTarefa(CrudTarefa crudTarefa, Scanner scanner, DateTimeFormatter formatter) {
             System.out.print("\nTítulo da Tarefa a ser editada: ");

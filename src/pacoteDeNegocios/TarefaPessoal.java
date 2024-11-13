@@ -35,6 +35,7 @@ public class TarefaPessoal extends Tarefa {
         return exibirDetalhesBase() +
                "\nCategoria: " + categoria +
                "\nPrioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +
+               "\n=======Tarefa de Pessoal=======" +
                "\n";
     }
 
