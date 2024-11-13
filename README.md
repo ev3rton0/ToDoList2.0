@@ -40,7 +40,7 @@ O projeto permite a diferenciação de usuários, com dois tipos principais:
 Essas permissões são gerenciadas de forma eficaz para garantir a segurança e a integridade dos dados.
 
 ## Diagrama das Classes
-![alt text](<Diagrama UML.png>)
+![alt text](<Diagrama de casos de uso .png>)
 
 ### Tecnologias Utilizadas
 - Linguagem: Java

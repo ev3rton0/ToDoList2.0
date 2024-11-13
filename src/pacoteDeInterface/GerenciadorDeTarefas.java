@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class GerenciadorDeTarefasFacade {
+public class GerenciadorDeTarefas {
     
     private CrudTarefa crudTarefa;
     private ListarTarefa listarTarefa;
@@ -22,7 +22,7 @@ public class GerenciadorDeTarefasFacade {
     private DateTimeFormatter formatter;
     private TipoUsuario tipoUsuario;
 
-    public GerenciadorDeTarefasFacade() {
+    public GerenciadorDeTarefas() {
         this.crudTarefa = new CrudTarefa();
         this.listarTarefa = new ListarTarefa();
         this.scanner = new Scanner(System.in);
