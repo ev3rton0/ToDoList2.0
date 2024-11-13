@@ -43,11 +43,10 @@ public class TarefaDeTrabalho extends Tarefa {
     public String exibirDetalhes() {
         // Utilizando o método `exibirDetalhesBase()` da classe Tarefa
         return exibirDetalhesBase() +
-               "\nColaborador: " + colaborador +
-               "\nPrioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +
-               "\nSetor da Empresa: " + setorDaEmpresa +
-               "\n======Tarefa de Trabalho======" +
-               "\n";
+               "\n| Colaborador: " + colaborador + 
+               "\n| Prioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") + 
+               "\n| Setor da Empresa: " + setorDaEmpresa + 
+               "\n+------Tarefa de Trabalho------+\n";
     }
 
     @Override

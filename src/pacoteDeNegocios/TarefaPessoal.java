@@ -33,9 +33,9 @@ public class TarefaPessoal extends Tarefa {
     public String exibirDetalhes() {
         // Utilizando o método `exibirDetalhesBase()` da classe Tarefa
         return exibirDetalhesBase() +
-               "\nCategoria: " + categoria +
-               "\nPrioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +
-               "\n=======Tarefa de Pessoal=======" +
+               "\n| Categoria: " + categoria +
+               "\n| Prioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +
+               "\n+--------Tarefa Pessoal--------+\n" +
                "\n";
     }
 

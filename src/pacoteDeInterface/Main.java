@@ -42,9 +42,9 @@ public class Main {
                 switch (opcao) {
                     case 1:
                         if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-                            System.out.print("\nTítulo da Tarefa: ");
+                            System.out.print("\n| Título da Tarefa: ");
                             String tituloTarefa = scanner.nextLine().trim();
-                            System.out.print("Descrição da Tarefa: ");
+                            System.out.print("| Descrição da Tarefa: ");
                             String descricaoTarefa = scanner.nextLine();
                             
                             LocalDate dataEntrega = null;
@@ -52,7 +52,7 @@ public class Main {
                             
                             // Loop para pedir a data até que o usuário insira no formato correto
                             while (!dataValida) {
-                                System.out.print("Data de Entrega (dd/MM/yyyy): ");
+                                System.out.print("| Data de Entrega (dd/MM/yyyy): ");
                                 String dataEntregaStr = scanner.nextLine();
                                 try {
                                     dataEntrega = LocalDate.parse(dataEntregaStr, formatter);
@@ -65,7 +65,7 @@ public class Main {
                             int prioridade = 0;
                             boolean prioridadeValida = false;
                             while (!prioridadeValida) {
-                                System.out.print("Prioridade:\n1 - (Alta)\n2 - (Media)\n3 - (Baixa)\n-> ");
+                                System.out.print("| Prioridade:1 - (Alta)\n\t     2 - (Media)\n\t     3 - (Baixa)\n-> ");
                                 try {
                                     prioridade = scanner.nextInt();
                                     if (prioridade < 1 || prioridade > 3) {
@@ -134,9 +134,11 @@ public class Main {
         
         while (true) {
             try {
-                System.out.println("| 1. Administrador");
-                System.out.println("| 2. Leitor");
-                System.out.println("\nSelecione o tipo de usuário:");
+                System.out.println("\n+----Tipo de Usuário----+");
+                System.out.println("| 1. Administrador      |");
+                System.out.println("| 2. Leitor             |");
+                System.out.println("+-----------------------+");
+                System.out.print("Selecione o tipo de usuário: ");
                 
                 escolha = scanner.nextInt();
                 scanner.nextLine();  // Limpar o buffer
@@ -156,18 +158,19 @@ public class Main {
     }
 
     private static void exibirMenu(TipoUsuario tipoUsuario) {
-        System.out.println("\n------To-Do List------");
+        System.out.println("\n+-------------ToDo List------------+");
         if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
-            System.out.println("| 1. Criar Tarefa");
-            System.out.println("| 2. Editar Tarefa");
-            System.out.println("| 3. Remover Tarefa");
+            System.out.println("| 1. Criar Tarefa                  |");
+            System.out.println("| 2. Editar Tarefa                 |");
+            System.out.println("| 3. Remover Tarefa                |");
         }
-        System.out.println("| 4. Marcar Tarefa como Concluída");
-        System.out.println("| 5. Listar Todas as Tarefas");
-        System.out.println("| 6. Listar Tarefas Concluídas");
-        System.out.println("| 7. Listar Tarefas Pendentes");
-        System.out.println("| 8. Mudar Tipo de Usuário");
-        System.out.println("| 0. Finalizar\n");
+        System.out.println("| 4. Marcar Tarefa como Concluída  |");
+        System.out.println("| 5. Listar Todas as Tarefas       |");
+        System.out.println("| 6. Listar Tarefas Concluídas     |");
+        System.out.println("| 7. Listar Tarefas Pendentes      |");
+        System.out.println("| 8. Mudar Tipo de Usuário         |");
+        System.out.println("| 0. Finalizar                     |");
+        System.out.println("+----------------------------------+");
     }
 
 
@@ -176,9 +179,11 @@ public class Main {
         boolean tipoValido = false;
     
         while (!tipoValido) {
-            System.out.println("Escolha o tipo de tarefa:");
-            System.out.println("1. Tarefa de Trabalho");
-            System.out.println("2. Tarefa Pessoal");
+            System.out.println("\n+----Tipo de tarefa----+");
+            System.out.println("| 1. Tarefa de Trabalho|");
+            System.out.println("| 2. Tarefa Pessoal    |");
+            System.out.println("+----------------------+");
+            System.out.print("-> ");
     
             try {
                 tipo = scanner.nextInt();
@@ -196,13 +201,13 @@ public class Main {
         }
     
         if (tipo == 1) {
-            System.out.print("Colaborador: ");
+            System.out.print("\n| Colaborador: ");
             String colaborador = scanner.nextLine();
-            System.out.print("Setor da Empresa (Ex: Administrativo): ");
+            System.out.print("| Setor da Empresa (Ex: Administrativo): ");
             String setorDaEmpresa = scanner.nextLine();
             crudTarefa.criarTarefaDeTrabalho(titulo, descricao, dataEntrega, colaborador, prioridade, setorDaEmpresa);
         } else {
-            System.out.print("Categoria: ");
+            System.out.print("| Categoria: ");
             String categoria = scanner.nextLine();
             crudTarefa.criarTarefaPessoal(titulo, descricao, dataEntrega, categoria, prioridade);
         }
@@ -213,7 +218,7 @@ public class Main {
     
 
     private static void editarTarefa(CrudTarefa crudTarefa, Scanner scanner, DateTimeFormatter formatter) {
-            System.out.print("\nTítulo da Tarefa a ser editada: ");
+            System.out.print("\n| Título da Tarefa a ser editada: ");
             String titulo1 = scanner.nextLine();
             
             // Verifica se a tarefa existe
@@ -221,23 +226,23 @@ public class Main {
                 Tarefa tarefa = crudTarefa.getTarefaPorTitulo(titulo1);
         
                 // Pergunta os valores gerais
-                System.out.print("Novo Título da Tarefa: ");
+                System.out.print("| Novo Título da Tarefa: ");
                 String novoTitulo = scanner.nextLine();
-                System.out.print("Nova Descrição da Tarefa: ");
+                System.out.print("| Nova Descrição da Tarefa: ");
                 String novaDescricao = scanner.nextLine();
-                System.out.print("Nova Data de Entrega (dd/MM/yyyy): ");
+                System.out.print("| Nova Data de Entrega (dd/MM/yyyy): ");
                 String novaDataEntregaStr = scanner.nextLine();
                 LocalDate novaDataEntrega = LocalDate.parse(novaDataEntregaStr, formatter);
         
                 if (tarefa instanceof TarefaDeTrabalho) {
                     //TarefaDeTrabalho tarefaTrabalho = (TarefaDeTrabalho) tarefa;
         
-                    System.out.print("Novo Colaborador: ");
+                    System.out.print("| Novo Colaborador: ");
                     String novoColaborador = scanner.nextLine();
-                    System.out.print("Nova Prioridade (1 - Alta, 2 - Média, 3 - Baixa): ");
+                    System.out.print("| Prioridade:1 - (Alta)\n\t     2 - (Media)\n\t     3 - (Baixa)\n-> ");
                     int novaPrioridade = scanner.nextInt();
                     scanner.nextLine(); // Consome o \n após o int
-                    System.out.print("Novo Status: ");
+                    System.out.print("| Novo Status: ");
                     String novoStatus = scanner.nextLine();
         
                     crudTarefa.editarTarefaDeTrabalho(titulo1, novoTitulo, novaDescricao, novaDataEntrega, novaPrioridade, novoColaborador, novoStatus);
@@ -245,12 +250,12 @@ public class Main {
                 } else if (tarefa instanceof TarefaPessoal) {
                     //TarefaPessoal tarefaPessoal = (TarefaPessoal) tarefa;
         
-                    System.out.print("Nova Categoria: ");
+                    System.out.print("| Nova Categoria: ");
                     String novaCategoria = scanner.nextLine();
-                    System.out.print("Nova Prioridade (1 - Alta, 2 - Média, 3 - Baixa): ");
+                    System.out.print("| Prioridade:1 - (Alta)\n\t     2 - (Media)\n\t     3 - (Baixa)\n-> ");
                     int novaPrioridade = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.print("Novo Status: ");
+                    System.out.print("| Novo Status: ");
                     String novoStatus = scanner.nextLine();
         
                     crudTarefa.editarTarefa(titulo1, novoTitulo, novaDescricao, novaDataEntrega, novaCategoria, novaPrioridade, novoStatus);
