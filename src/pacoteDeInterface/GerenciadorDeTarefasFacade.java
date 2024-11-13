@@ -5,30 +5,32 @@ import pacoteDeNegocios.Tarefa;
 import pacoteDeNegocios.TarefaDeTrabalho;
 import pacoteDeNegocios.TarefaPessoal;
 
-import java.util.Comparator;
-import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Comparator;
+import java.util.InputMismatchException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.LocalDate;
 
-public class Main {
-
+public class GerenciadorDeTarefasFacade {
     
-    public static void main(String[] args) {
-        CrudTarefa crudTarefa = new CrudTarefa();
-        ListarTarefa listarTarefa = new ListarTarefa();
-        Scanner scanner = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private CrudTarefa crudTarefa;
+    private ListarTarefa listarTarefa;
+    private Scanner scanner;
+    private DateTimeFormatter formatter;
+    private TipoUsuario tipoUsuario;
 
-        // Supondo que AsciiArt e TipoUsuario estão implementados corretamente
-        AsciiArt asciiArt = new AsciiArt();
-        System.out.println(asciiArt.getImprimirTitulo());
+    public GerenciadorDeTarefasFacade() {
+        this.crudTarefa = new CrudTarefa();
+        this.listarTarefa = new ListarTarefa();
+        this.scanner = new Scanner(System.in);
+        this.formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.tipoUsuario = selecionarTipoUsuario(scanner);
+    }
 
-        TipoUsuario tipoUsuario = selecionarTipoUsuario(scanner);
-
+    public void executar() {
         int opcao = -1;
 
         while (opcao != 0) {
@@ -38,7 +40,7 @@ public class Main {
             try {
                 opcao = scanner.nextInt();
                 scanner.nextLine();  // Limpar o buffer
-        
+                
                 switch (opcao) {
                     case 1:
                         if (tipoUsuario == TipoUsuario.ADMINISTRADOR) {
@@ -127,8 +129,6 @@ public class Main {
         
         scanner.close();
     }
-
-
     private static TipoUsuario selecionarTipoUsuario(Scanner scanner) {
         int escolha = -1;
         
@@ -324,5 +324,3 @@ public class Main {
     listarTarefa.listarTarefasPendentes(tarefasPendentes);
   }
 }
-
-
