@@ -39,7 +39,7 @@ public class GerenciadorDeTarefas {
             
             try {
                 opcao = scanner.nextInt();
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();  
                 
                 switch (opcao) {
                     case 1:
@@ -52,13 +52,13 @@ public class GerenciadorDeTarefas {
                             LocalDate dataEntrega = null;
                             boolean dataValida = false;
                             
-                            // Loop para pedir a data até que o usuário insira no formato correto
+                            
                             while (!dataValida) {
                                 System.out.print("| Data de Entrega (dd/MM/yyyy): ");
                                 String dataEntregaStr = scanner.nextLine();
                                 try {
                                     dataEntrega = LocalDate.parse(dataEntregaStr, formatter);
-                                    dataValida = true;  // A data foi inserida corretamente
+                                    dataValida = true;  
                                 } catch (DateTimeParseException e) {
                                     System.out.println("Formato de data inválido. Por favor, insira no formato dd/MM/yyyy.");
                                 }
@@ -76,10 +76,10 @@ public class GerenciadorDeTarefas {
                                     prioridadeValida = true;
                                 } catch (InputMismatchException | IllegalArgumentException e) {
                                     System.out.println("Prioridade inválida! Por favor, escolha um número entre 1 e 3.");
-                                    scanner.nextLine();  // Limpar o buffer para evitar loop infinito
+                                    scanner.nextLine();  
                                 }
                             }
-                            scanner.nextLine();  // Limpar o buffer
+                            scanner.nextLine();  
                             criarTarefa(crudTarefa, tituloTarefa, descricaoTarefa, dataEntrega, prioridade, scanner);
                         } else {
                             System.out.println("Opção inválida para o usuário leitor.");
@@ -123,7 +123,7 @@ public class GerenciadorDeTarefas {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\nEntrada inválida! Por favor, insira um número.");
-                scanner.nextLine();  // Limpar o buffer para evitar loop infinito
+                scanner.nextLine();  
             }
         }
         
@@ -141,7 +141,7 @@ public class GerenciadorDeTarefas {
                 System.out.print("Selecione o tipo de usuário: ");
                 
                 escolha = scanner.nextInt();
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();  
                 
                 if (escolha == 1) {
                     return TipoUsuario.ADMINISTRADOR;
@@ -152,7 +152,7 @@ public class GerenciadorDeTarefas {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
-                scanner.nextLine(); // Limpa a entrada inválida do scanner
+                scanner.nextLine(); 
             }
         }
     }
@@ -187,16 +187,16 @@ public class GerenciadorDeTarefas {
     
             try {
                 tipo = scanner.nextInt();
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();  
     
                 if (tipo == 1 || tipo == 2) {
-                    tipoValido = true;  // Valor válido, sair do loop
+                    tipoValido = true;  
                 } else {
                     System.out.println("Entrada inválida! Por favor, insira um número (1 ou 2).");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Por favor, insira um número (1 ou 2).\n");
-                scanner.nextLine();  // Limpar o buffer para evitar loop infinito
+                scanner.nextLine();  
             }
         }
     
@@ -234,27 +234,27 @@ public class GerenciadorDeTarefas {
             String novaDataEntregaStr = scanner.nextLine();
             LocalDate novaDataEntrega = LocalDate.parse(novaDataEntregaStr, formatter);
     
-            int prioridade = -1; // Variável para armazenar a prioridade
+            int prioridade = -1; 
             
             if (tarefa instanceof TarefaDeTrabalho) {
                 System.out.print("| Novo Colaborador: ");
                 String novoColaborador = scanner.nextLine();
     
-                // Solicita e valida a prioridade
+                
                 while (true) {
                     try {
                         System.out.print("| Prioridade: 1 - (Alta)\n\t      2 - (Média)\n\t      3 - (Baixa)\n-> ");
                         prioridade = scanner.nextInt();
-                        scanner.nextLine(); // Consome o \n após o int
+                        scanner.nextLine(); 
     
                         if (prioridade >= 1 && prioridade <= 3) {
-                            break; // Se a prioridade for válida, sai do loop
+                            break; 
                         } else {
                             System.out.println("Por favor, insira um número entre 1 e 3 para definir a prioridade.");
                         }
                     } catch (InputMismatchException e) {
                         System.out.println("Entrada inválida. Por favor, insira um número inteiro entre 1 e 3.");
-                        scanner.nextLine(); // Limpa o buffer em caso de erro
+                        scanner.nextLine(); 
                     }
                 }
     
@@ -264,21 +264,21 @@ public class GerenciadorDeTarefas {
                 crudTarefa.editarTarefaDeTrabalho(titulo1, novoTitulo, novaDescricao, novaDataEntrega, prioridade, novoColaborador, novoSetorDaEmpresa);
     
             } else if (tarefa instanceof TarefaPessoal) {
-                // Solicita e valida a prioridade
+                
                 while (true) {
                     try {
                         System.out.print("| Prioridade: 1 - (Alta)\n\t      2 - (Média)\n\t      3 - (Baixa)\n-> ");
                         prioridade = scanner.nextInt();
-                        scanner.nextLine(); // Consome o \n após o int
+                        scanner.nextLine(); 
     
                         if (prioridade >= 1 && prioridade <= 3) {
-                            break; // Se a prioridade for válida, sai do loop
+                            break; 
                         } else {
                             System.out.println("Por favor, insira um número entre 1 e 3 para definir a prioridade.");
                         }
                     } catch (InputMismatchException e) {
                         System.out.println("Entrada inválida. Por favor, insira um número inteiro entre 1 e 3.");
-                        scanner.nextLine(); // Limpa o buffer em caso de erro
+                        scanner.nextLine(); 
                     }
                 }
     
@@ -315,11 +315,10 @@ public class GerenciadorDeTarefas {
     }
 
     private static void listarTarefasPendentesPorPrioridade(List<Tarefa> tarefas, ListarTarefa listarTarefa) {
-    // Ordenar tarefas pendentes por prioridade decrescente
     List<Tarefa> tarefasPendentes = tarefas.stream()
-            .filter(t -> !t.isConcluida())  // Filtra as tarefas que ainda não foram concluídas
-            .sorted(Comparator.comparingInt(Tarefa::getPrioridade).reversed())  // Ordena por prioridade decrescente
-            .collect(Collectors.toList());  // Converte para uma lista
+            .filter(t -> !t.isConcluida())  
+            .sorted(Comparator.comparingInt(Tarefa::getPrioridade).reversed())  
+            .collect(Collectors.toList());  
 
     listarTarefa.listarTarefasPendentes(tarefasPendentes);
   }

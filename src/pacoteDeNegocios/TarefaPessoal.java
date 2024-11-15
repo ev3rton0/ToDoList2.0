@@ -3,11 +3,11 @@ import java.time.LocalDate;
 
 public class TarefaPessoal extends Tarefa {
     private String categoria; // Lazer, Saúde , dia a dia
-    private int prioridade; // Alta, Média, Baixa (1, 2, 3)
+    private int prioridade; 
     
 
     public TarefaPessoal(String titulo, String descricao, LocalDate dataEntrega, String categoria, int prioridade) {
-        super(titulo, descricao, dataEntrega);  // Chamando o construtor da classe Tarefa
+        super(titulo, descricao, dataEntrega); 
         this.categoria = categoria;
         this.prioridade = prioridade;
     }
@@ -31,7 +31,6 @@ public class TarefaPessoal extends Tarefa {
 
     @Override
     public String exibirDetalhes() {
-        // Utilizando o método `exibirDetalhesBase()` da classe Tarefa
         return exibirDetalhesBase() +
                "\n| Categoria: " + categoria +
                "\n| Prioridade: " + (prioridade == 1 ? "Alta" : prioridade == 2 ? "Média" : "Baixa") +

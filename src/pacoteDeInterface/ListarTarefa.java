@@ -4,8 +4,7 @@ import java.util.List;
 import pacoteDeNegocios.Tarefa;
 
 public class ListarTarefa {
-
-    // Método para listar todas as tarefas
+    
     public void listarTarefas(List<Tarefa> tarefas) {
         if (tarefas.isEmpty()) {
             System.out.println("Não há tarefas a serem listadas.");
@@ -16,8 +15,6 @@ public class ListarTarefa {
             }
         }
     }
-
-    // Método para listar tarefas concluídas
     public void listarTarefasConcluidas(List<Tarefa> tarefas) {
         System.out.println("\n| Tarefas Concluídas:\n");
         boolean encontrouConcluidas = false;
@@ -35,7 +32,6 @@ public class ListarTarefa {
         
     }
 
-    // Método para listar tarefas pendentes
     public void listarTarefasPendentes(List<Tarefa> tarefas) {
         System.out.println("\n| Tarefas Pendentes:");
         boolean encontrouPendentes = false;

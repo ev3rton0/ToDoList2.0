@@ -41,7 +41,6 @@ public abstract class Tarefa {
         return concluida;
     }
 
-    // Implementação do método `exibirDetalhes` padrão, para ser usado nas subclasses
     protected String exibirDetalhesBase() {
         return "+------------------------------+" +
                "\n| Título: " + titulo +
